@@ -87,6 +87,8 @@ contract CoinFlipV2 is Ownable, usingProvable {
         //require(msg.sender == provable_cbAddress());
         latestNumber = uint(keccak256(abi.encodePacked(_result))) % 2;
         
+        //emit event with latest random number generated
+        emit GeneratedRandomNumber(latestNumber);
 
         //to do
         // if random number is equal to user heads or tails then double reward and add t user balance. remove that amount fromm housebalance
@@ -107,9 +109,8 @@ contract CoinFlipV2 is Ownable, usingProvable {
             //set waiting status to false since flip has ended
             waitingStatus[waiting[_queryId].user] = false;
 
-            //emit events
-            emit FlipCoinResult(waiting[_queryId].user, newResult.win , newResult.reward);  emit FlipCoinResult(waiting[_queryId].user, newResult.win , newResult.reward);
-            emit GeneratedRandomNumber(latestNumber);
+            //emit flip result event
+            emit FlipCoinResult(waiting[_queryId].user, newResult.win , newResult.reward);  
             
             //reset waiting mapping
             delete waiting[_queryId];
@@ -129,8 +130,7 @@ contract CoinFlipV2 is Ownable, usingProvable {
             waitingStatus[waiting[_queryId].user] = false;
            
             //emit events
-            emit FlipCoinResult(waiting[_queryId].user, newResult.win , newResult.reward);  emit FlipCoinResult(waiting[_queryId].user, newResult.win , newResult.reward);
-            emit GeneratedRandomNumber(latestNumber);
+            emit FlipCoinResult(waiting[_queryId].user, newResult.win , newResult.reward);
                
             //reset waiting mapping
             delete waiting[_queryId];
@@ -172,7 +172,7 @@ contract CoinFlipV2 is Ownable, usingProvable {
         return houseBalance;
     }
 
-    function getUserBalance() public view returns(uint) {
-        return balances[msg.sender];
+    function getUserBalance(address _user) public view returns(uint) {
+        return balances[_user];
     }
 }
