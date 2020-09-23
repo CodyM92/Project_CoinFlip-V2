@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+
+    <title>Coin Flip Dapp</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./web3.min.js"></script>
+    <script type="text/javascript" src="./abi.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  </head>
+  <body>
+
+  <!-- image and heading -->
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <img src="https://i.pinimg.com/originals/60/85/2c/60852c20c4bcbbe8f9850a8471a0a1c8.jpg">
+        <h1 class="display-4">Coin Flip Dapp</h1>
+        <h2 class="lead">Double Your ETH or Lose It All! </h2>
+      </div>
+    </div>
+
+    <!-- Place Bet Amount Input & Place Bet Button -->
+    <div class="container">
+      <div>
+        <h2>Place Your Bet</h2>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="bet_amount" placeholder="Your Bet Amount" required>
+        </div>
+        <h3>Heads or Tails</h3>
+        <div class="form-group col-md-6">
+          <select class="form-control" id="headsOrTails_choice" required>
+            <option value=0 selected>Heads</option>
+            <option value=1 select>Tails</option>
+          </select>
+        </div>
+        <button type="button" id="place_bet_button" class="btn btn-primary">Place Bet</button>
+        <div class="form-group col-md-6">
+             <select class="form-control" id="bet_unit">
+               <option value=0.001 selected>ETH</option>
+             </select>
+        </div>
+      </div>
+
+      <!-- Bet Result Output -->
+      <div class="d-flex justify-content-center">
+          <span style="color:rgba(100,100,250,0.7); font-size:30px" id="Output"></span>
+        </div>
+        <br></br>
+
+
+        <!-- User Get Balance Button -->
+      <div>
+        <h2>Check Users ETH Balances</h2>
+        <button type="button" id="getUserBalance_button" class="btn btn-primary">Check User Balance</button>
+      </div>
+      
+      <!-- Get House Balance Button -->
+      <div>
+        <h2>Check House ETH Balance</h2>
+        <button type="button" id="getHouseBalance_button" class="btn btn-primary">Check House Balance</button>
+      </div>
+
+      <!-- User Withdraw Button -->
+      <div>
+        <h2>Users Withdraw ETH</h2>
+        <input type="text" class="form-control" id="userWithdraw_amount" placeholder="Your Withdraw Amount" required>
+        <button type="button" id="userWithdraw_button" class="btn btn-primary">User Withdraw</button>
+      </div>
+  
+      <!-- Owner Withdraw Button -->
+      <div>
+        <h2>Withdraw ETH - Only For Contract Owner!</h2>
+        <input type="text" class="form-control" id="ownerWithdraw_amount" placeholder="Owner Withdraw Amount" required>
+        <button type="button" id="ownerWithdraw_button" class="btn btn-primary">Owner Withdraw</button>
+      </div>
+      </div>
+
+    <div class="d-flex justify-content-center">
+       <span style="color:rgba(100,100,250,0.7); font-size:30px" id="Output"></span>
+     </div>
+     <br></br>
+     
+  </body>
+</html>
