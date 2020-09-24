@@ -15,6 +15,7 @@ contract CoinFlipV2 is Ownable, usingProvable {
 
     //Modifiers
     modifier costs(uint value) {
+        //using this to forward oracle call fee to betting user
         require(msg.value >= value);
         _;
     }
@@ -52,10 +53,9 @@ contract CoinFlipV2 is Ownable, usingProvable {
     }
 
     //Functions
-    function flipCoin(uint _headsOrTails) public payable costs(0.01 ether) {
+    function flipCoin(uint _headsOrTails) public payable costs(0.004 ether) {
         require(waitingStatus[msg.sender] == false, "you are already playing");
         require((msg.value * 2) <= (address(this).balance), "The bet amount cannot exceed the payable jackpot!");
-        require(_headsOrTails == 0 || _headsOrTails == 1, "Must can only enter 0 or 1");
 
         //starting oracle call
         uint QUERY_EXECUTION_DELAY = 0;
@@ -70,8 +70,8 @@ contract CoinFlipV2 is Ownable, usingProvable {
             GAS_FOR_CALLBACK
             );
         
-
         emit LogNewProvableQuery("Provable query was sent, awaiting reply");
+
         // set player waiting to true
         waitingStatus[msg.sender] = true;
 
@@ -83,8 +83,7 @@ contract CoinFlipV2 is Ownable, usingProvable {
     }
 
     function __callback(bytes32 _queryId, string memory _result, bytes memory _proof) public {
-        //temporarily commented out require while not on testnet
-        //require(msg.sender == provable_cbAddress());
+        require(msg.sender == provable_cbAddress());
         latestNumber = uint(keccak256(abi.encodePacked(_result))) % 2;
         
         //emit event with latest random number generated
@@ -116,7 +115,7 @@ contract CoinFlipV2 is Ownable, usingProvable {
             delete waiting[_queryId];
         }
         
-        else { 
+        else if (waiting[_queryId].headsOrTails != latestNumber) { 
             //create new result to log the users losing flip
             Result memory newResult;
             newResult.win = false;
@@ -146,9 +145,10 @@ contract CoinFlipV2 is Ownable, usingProvable {
     */
 
     function setBet(bytes32 _queryId, address payable _user, uint _betAmount, uint _headsOrTails) internal {
+        uint cost = .004 ether;
         Bet memory newBet;
         newBet.user = _user;
-        newBet.betAmount = _betAmount;
+        newBet.betAmount = _betAmount - cost;
         newBet.headsOrTails = _headsOrTails;
         waiting[_queryId] = newBet;
     }
@@ -160,19 +160,10 @@ contract CoinFlipV2 is Ownable, usingProvable {
         emit UserWithdrawl(_to, _amount);
     }
 
-    function ownerWithdraw(uint _amount) public onlyOwner {
-        require(_amount <= houseBalance, "Something is wrong, houseBalance and contract balance dont match");
-        uint toTransfer = _amount;
+    function ownerWithdraw() public onlyOwner {
+        uint toTransfer = address(this).balance;
         houseBalance = houseBalance - toTransfer;
         msg.sender.transfer(toTransfer);
         emit OwnerWithdrawl(msg.sender, toTransfer, houseBalance);
-    }
-
-    function getHouseBalance() public view returns(uint) {
-        return houseBalance;
-    }
-
-    function getUserBalance(address _user) public view returns(uint) {
-        return balances[_user];
     }
 }

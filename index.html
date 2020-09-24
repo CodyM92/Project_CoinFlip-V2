@@ -23,7 +23,8 @@
       <div class="container">
         <img src="https://i.pinimg.com/originals/60/85/2c/60852c20c4bcbbe8f9850a8471a0a1c8.jpg">
         <h1 class="display-4">Coin Flip Dapp</h1>
-        <h2 class="lead">Double Your ETH or Lose It All! </h2>
+        <h1 class="lead">Double Your ETH or Lose It All! </h1>
+        <h2 class="lead">Your bet will be reduced by 0.004 ETH for Oracle Call Gas Cost - We do not keep any ETH, we just pass on the costs</h2>
       </div>
     </div>
 
@@ -32,7 +33,7 @@
       <div>
         <h2>Place Your Bet</h2>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="bet_amount" placeholder="Your Bet Amount" required>
+          <input type="text" class="form-control" id="bet_amount" placeholder="Your Bet Amount in ETH" required>
         </div>
         <h3>Heads or Tails</h3>
         <div class="form-group col-md-6">
@@ -42,57 +43,38 @@
           </select>
         </div>
         <button type="button" id="place_bet_button" class="btn btn-primary">Place Bet</button>
-        <div class="form-group col-md-6">
-             <select class="form-control" id="bet_unit">
-               <option value=0.001 selected>ETH</option>
-             </select>
-        </div>
+        
       </div>
 
       <!-- Bet Result Output -->
       <div class="d-flex justify-content-center">
           <span style="color:rgba(100,100,250,0.7); font-size:30px" id="Output"></span>
-        </div>
-        <br></br>
-
+      </div>
+      <br></br>
 
         <!-- User Get Balance Button -->
       <div>
-        <h2>Check Users ETH Balances</h2>
+        <h2>Check Users ETH Balances - 
+            User Balance: <span id= "userBalanceOutput"></span>
+        </h2>
         <button type="button" id="getUserBalance_button" class="btn btn-primary">Check User Balance</button>
-        <output title="User Balance" id="userBalance"></output>
       </div>
       
-      <!-- Get House Balance Button -->
-      <div>
-        <h2>Check House ETH Balance</h2>
-        <button type="button" id="getHouseBalance_button" class="btn btn-primary">Check House Balance</button>
-        <div>
-          <h2> 
-            User Balance: <span id= "userBalanceOutput"></span>
-          </h2>
-        </div>
-      </div>
-
+      <br></br>
       <!-- User Withdraw Button -->
       <div>
         <h2>Users Withdraw ETH</h2>
         <input type="text" class="form-control" id="userWithdraw_amount" placeholder="Your Withdraw Amount" required>
         <button type="button" id="userWithdraw_button" class="btn btn-primary">User Withdraw</button>
       </div>
-  
+
+      <br></br>
       <!-- Owner Withdraw Button -->
       <div>
-        <h2>Withdraw ETH - Only For Contract Owner!</h2>
-        <input type="text" class="form-control" id="ownerWithdraw_amount" placeholder="Owner Withdraw Amount" required>
+        <h2>Withdraw All Contract ETH</h2>
         <button type="button" id="ownerWithdraw_button" class="btn btn-primary">Owner Withdraw</button>
       </div>
-      </div>
+    </div>
 
-     <div class="d-flex justify-content-center">
-       <span style="color:rgba(100,100,250,0.7); font-size:30px" id="Output"></span>
-     </div>
-     <br></br>
-     
   </body>
 </html>
