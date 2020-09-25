@@ -3,7 +3,7 @@ var contractInstance;
 
 $(document).ready(function() {
     window.ethereum.enable().then(function(accounts){
-      contractInstance = new web3.eth.Contract(abi, "0x13b62a3bf6169fAfFDEd84701aD56D1Bff044b6E", {from: accounts[0] });
+      contractInstance = new web3.eth.Contract(abi, "0xACD2b8d7CFD1C5d817946e5fa169d1A2ff076cA4", {from: accounts[0] });
       console.log(contractInstance);
     });
 
@@ -22,7 +22,9 @@ function flipCoin() {
       else {
         console.log(bet_amount);
         config = {value: web3.utils.toWei(bet_amount)};
-        contractInstance.methods.flipCoin(_headsOrTails).send(config)
+        contractInstance.methods.flipCoin(_headsOrTails).send(config).then((confirmationNr)=>{
+          alert("Your Transaction has been confirmed, Please wait for result to appear on screen!");
+        })
       };
     };
     //waits for generated random number event
@@ -39,7 +41,7 @@ function flipCoin() {
         let _user = result.returnValues.user;
         let _status = result.returnValues.status; 
         if (_status == true) {
-          $("#Output").text(_user + " has won " + (_reward / 1000000000000000000));
+          $("#Output").text("You have won " + (_reward / 1000000000000000000) + " ETH!!!");
         }
         else if (_status == false) {
           $("#Output").text(_user + " has lost, try again next time! ");
